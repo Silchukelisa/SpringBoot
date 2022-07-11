@@ -1,13 +1,19 @@
 package com.example.demo.Service;
 
 import com.example.demo.Model.Car;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+
+@Service
 public class CarServiceImp implements CarService {
+
+    @Value("${maxCar}")
+    private int maxCar;
 
     public List<Car> listCar() {
         List<Car> listCars = new ArrayList<>();
@@ -25,19 +31,19 @@ public class CarServiceImp implements CarService {
         return listCars;
     }
 
-    public List<Car> logicListCar(int count, String maxCar) {
+    public List<Car> logicListCar(String count) {
         List<Car> list;
-        if (count > Integer.parseInt(maxCar)) {
-            list = getCar(Integer.parseInt(maxCar));
+        if (count == null || Integer.parseInt(count) > maxCar) {
+            list = getCar(maxCar);
         } else {
-            list = getCar(count);
+            list = getCar(Integer.parseInt(count));
         }
 
         return list;
     }
 
     public List<Car> getCar(int count) {
-        Stream<Car> stream = listCar().stream();
-        return stream.limit(count).collect(Collectors.toList());
+        return listCar().stream().limit(count).collect(Collectors.toList());
     }
+
 }

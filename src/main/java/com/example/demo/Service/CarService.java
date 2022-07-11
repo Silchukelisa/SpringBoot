@@ -5,7 +5,7 @@ import com.example.demo.Model.Car;
 import java.util.List;
 
 public interface CarService {
-    List<Car> logicListCar(int count, String maxCar);
+    List<Car> logicListCar(String count);
 
     List<Car> listCar();
 
